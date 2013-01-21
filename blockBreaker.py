@@ -49,7 +49,8 @@ class blockBreaker(object):
                 #for i in range(len(balls)):
                     diff = (self.thePlayer.rect.x + self.thePlayer.size[0]/2) - (b.rect.x+b.size[0]/2)
                     ballsCollide.pop()
-                    b.rect.y = 600 - self.thePlayer.rect.height - b.rect.height -1
+                    b.rect.y = 600 - self.thePlayer.rect.height - b.rect.height
+                    b.y=b.rect.y
                     b.bounce(diff)
             for b in balls:
                 deadBlocks=pygame.sprite.spritecollide(b,self.block_list,True)
