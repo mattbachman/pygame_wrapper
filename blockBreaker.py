@@ -56,8 +56,12 @@ class blockBreaker(object):
                 deadBlocks=pygame.sprite.spritecollide(b,self.block_list,True)
                 if len(deadBlocks)>0:
                     b.bounce(0)
+            bL=self.block_list.sprites()
+            if len(bL)<=0:
+                self.complete=True
+                self.running=False
 
-                
+                 
 
         self.block_list.update()
         self.thePlayer.update()
@@ -65,6 +69,8 @@ class blockBreaker(object):
         for b in balls:
             if b.update():
                 self.ball_group.remove(b)
+                self.running=False
+                self.lost=True
             
 
     def eventHandler(self,event):
