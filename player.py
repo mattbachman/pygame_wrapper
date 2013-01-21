@@ -13,14 +13,14 @@ class Player(pygame.sprite.Sprite):
         self.moveRight=False
 
     def moveEvent(self,key):
-        print("in move event")
+        #print("in move event")
         if key == pygame.K_LEFT:
             self.moveLeft=not self.moveLeft
         elif key == pygame.K_RIGHT:
             self.moveRight=not self.moveRight
 
     def update(self):
-        print(str(self.moveLeft)+" "+str(self.moveRight))
+        #print(str(self.moveLeft)+" "+str(self.moveRight))
         if self.moveLeft:
             self.rect.x=self.rect.x-10
             if self.rect.x<0:
