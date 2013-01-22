@@ -1,17 +1,14 @@
 #basic driver for implementation of gameEngine.py
 #Matt Bachman, Jan 2013
 
-#to import from parent directory
-import sys
-sys.path.append("..")
-import gameEngine
+from .. gameEngine import *
 import blockBreaker
 
 def main():
 
 
     bb=blockBreaker.blockBreaker()
-    theGame=gameEngine.gameEngine((800,600),"Block Breaker",bb)
+    theGame=gameEngine((800,600),"Block Breaker",bb)
 
     theGame.run()
 
