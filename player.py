@@ -18,14 +18,16 @@ class Player(pygame.sprite.Sprite):
             self.moveLeft=not self.moveLeft
         elif key == pygame.K_RIGHT:
             self.moveRight=not self.moveRight
-
+    def reset(self):
+        self.rect.x=360
+        self.rect.y=580
     def update(self):
         #print(str(self.moveLeft)+" "+str(self.moveRight))
         if self.moveLeft:
-            self.rect.x=self.rect.x-10
+            self.rect.x=self.rect.x-1
             if self.rect.x<0:
                 self.rect.x=0
         if self.moveRight:
-            self.rect.x=self.rect.x+10
+            self.rect.x=self.rect.x+1
             if self.rect.x>720:
                 self.rect.x=720

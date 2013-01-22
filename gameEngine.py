@@ -22,7 +22,9 @@ class gameEngine(object):
         self.screen=pygame.display.set_mode(size)
         self.tickLen=tL
         self.done=False
-        
+        self.startScreen=True
+        self.nextLevel=False
+        self.gameOver=False
         self.game=myObj
         
         pygame.display.set_caption(name)
@@ -39,16 +41,39 @@ class gameEngine(object):
                 
 
     def eventHandler(self,events):
+        test=-2
         for event in events:
             handled=False
             if event.type == pygame.QUIT:
                 self.done=True
                 handled=True
             if not handled:
-                self.game.eventHandler(event)
+                if not self.startScreen and not self.gameOver and not self.nextLevel:
+                    self.game.eventHandler(event)
+                elif self.gameOver:
+                    test=self.game.menuHandler(event)
+                    if test==0:
+                        self.gameOver=False
+                elif self.nextLevel:
+                    test=self.game.menuHandler(event)
+                    if test==0:
+                        self.nextLevel=False
+                else:
+                    test=self.game.menuHandler(event)
+                    if test==0:
+                        self.startScreen=False
+            if test==-1:
+                done=True
+                        
 
     def gameLogic(self):
-        self.game.logic()
+        if not self.startScreen and not self.gameOver:
+            test=self.game.logic()
+            if test==1:
+                self.nextLevel=True
+            elif test==-1:
+                self.gameOver=True
+            
 
     def gameDraw(self):
         self.screen.fill(white)

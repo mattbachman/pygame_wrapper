@@ -17,7 +17,7 @@ class Ball(pygame.sprite.Sprite):
         self.direction=200
         self.x=float(location[0])
         self.y=float(location[1])
-        self.speed=5.0
+        self.speed=1.0
 
     def preStartMoveEvent(self,key):
         if key == pygame.K_LEFT:
@@ -31,13 +31,13 @@ class Ball(pygame.sprite.Sprite):
 
     def preMove(self):
         if self.preMoveLeft:
-            self.rect.x=self.rect.x-10
+            self.rect.x=self.rect.x-1
             self.x-=10
             if self.rect.x<35:
                 self.rect.x=35
                 self.x=35
         if self.preMoveRight:
-            self.rect.x=self.rect.x+10
+            self.rect.x=self.rect.x+1
             self.x+=10
             if self.rect.x>755:
                 self.rect.x=755
