@@ -1,3 +1,6 @@
+#basic driver for implementation of gameEngine.py
+#Matt Bachman, Jan 2013
+
 from gameEngine import *
 import blockBreaker
 

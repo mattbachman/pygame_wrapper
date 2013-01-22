@@ -1,24 +1,33 @@
+#ball.py
+#ball class for block breaker
+#Matt Bachman, Jan 2013
+
 import pygame
 import math
 
 class Ball(pygame.sprite.Sprite):
-    def __init__(self,color,location):
+    #constructor
+    def __init__(self,color,location,bSize=(10,10)):
+        #inherited constructor
         pygame.sprite.Sprite.__init__(self)
-        self.size=(10,10)
-        self.image=pygame.Surface(self.size)
-        self.image.fill(color)
-        self.rect=self.image.get_rect()
-        self.rect.x=location[0]
-        self.rect.y=location[1]
+        #ball variables
+        self.size=bSize
         self.isMoving=False
         self.preMoveLeft=False
         self.preMoveRight=False
-
         self.direction=200
         self.x=float(location[0])
         self.y=float(location[1])
         self.speed=1.0
 
+        #sprite variables
+        self.image=pygame.Surface(self.size)
+        self.image.fill(color)
+        self.rect=self.image.get_rect()
+        self.rect.x=location[0]
+        self.rect.y=location[1]
+        
+    #for events before the ball starts moving
     def preStartMoveEvent(self,key):
         if key == pygame.K_LEFT:
             self.preMoveLeft=not self.preMoveLeft
@@ -29,23 +38,26 @@ class Ball(pygame.sprite.Sprite):
             self.preMoveLeft=False
             self.preMoveRight=False
 
+    #move the ball with the paddle
     def preMove(self):
         if self.preMoveLeft:
-            self.rect.x=self.rect.x-1
-            self.x-=10
+            self.rect.x-=1
+            self.x-=1
             if self.rect.x<35:
                 self.rect.x=35
                 self.x=35
         if self.preMoveRight:
-            self.rect.x=self.rect.x+1
-            self.x+=10
+            self.rect.x+=1
+            self.x+=1
             if self.rect.x>755:
                 self.rect.x=755
                 self.x=755
 
+    #horizontal bounce
     def bounce(self,diff):
         self.direction = ((180-self.direction)%360)-diff
 
+    #update for sprite class
     def update(self):
         if not self.isMoving:
             self.preMove()

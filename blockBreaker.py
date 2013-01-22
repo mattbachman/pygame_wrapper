@@ -88,14 +88,6 @@ class blockBreaker(object):
 ##                if event.key == pygame.K_LEFT or event.key==pygame.K_RIGHT:
 ##                    self.thePlayer.stopMove()
 
-    def menuHandler(self,event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_n:
-                self.nextLevel()
-                return 0
-            elif event.key == pygame.K_ESCAPE:
-                return -1
-        return 1
 
         
     def buildLevel1(self):
