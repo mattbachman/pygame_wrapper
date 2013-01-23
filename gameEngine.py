@@ -21,6 +21,7 @@
 
 
 import pygame
+import pickle
 
 
 ##TODO MAKE COLOR DICTIONARY
@@ -112,6 +113,12 @@ class gameEngine(object):
             if event.key == pygame.K_n:
                 self.game.nextLevel()
                 return 0
+            elif event.key == pygame.K_s:
+                self.saveGame()
+                return 4
+            elif event.key == pygame.K_l:
+                self.loadGame()
+                return 4
             elif event.key == pygame.K_ESCAPE:
                 return -1
         return 1
@@ -152,4 +159,35 @@ class gameEngine(object):
         else:
             self.screen=self.game.draw(self.screen)
         pygame.display.flip()
+
+
+    #TODO :: Make saveGame and loadGame platform independent
+    #by removing whitespaces
+    def saveGame(self):
+        saveMe = (self.game.level,self.startScreen,self.nextLevel,
+                  self.gameOver,self.score)
+        saveFile = self.name+".pickle"
+        try:
+            print("Saving "+self.name)
+            file = open(saveFile,'wb')
+            pickle.dump(saveMe,file,pickle.HIGHEST_PROTOCOL)
+            file.close()
+        except:
+            print("Error saving file")
+            
+    def loadGame(self):
+        loadFile = self.name+".pickle"
+        try:
+            print("Loading File")
+            file = open(loadFile,'rb')
+            loadMe = pickle.load(file)
+            file.close()
+        except:
+            print("Error Loading File")
+        else:
+            self.game.level=loadMe[0]
+            self.startScreen=loadMe[1]
+            self.nextLevel=loadMe[2]
+            self.score=loadMe[4]
+            self.gameOver=loadMe[3]
     

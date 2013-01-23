@@ -68,6 +68,8 @@ class blockBreaker(object):
     def nextLevel(self):
         self.ball_group.empty()
         self.block_list.empty()
+        self.all_sprite_list.empty()
+        self.all_sprite_list.add(self.thePlayer)
         self.thePlayer.reset()
         self.buildBlock(self.buildLevel1(),black)
         
