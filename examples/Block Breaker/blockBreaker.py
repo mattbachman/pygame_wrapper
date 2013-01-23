@@ -2,12 +2,9 @@ import pygame
 import Block
 import player
 import ball
-
-    # Define some colors
-black = ( 0, 0, 0)
-white = ( 255, 255, 255)
-green = ( 0, 255, 0)
-red = ( 255, 0, 0)
+import sys
+sys.path.append('../..')
+from gameEngine import color
 
 class blockBreaker(object):
     def __init__(self):
@@ -18,7 +15,7 @@ class blockBreaker(object):
         self.block_list = pygame.sprite.RenderPlain()
         self.all_sprite_list = pygame.sprite.RenderPlain()
         self.ball_group = pygame.sprite.Group()
-        self.thePlayer=player.Player(black)
+        self.thePlayer=player.Player(color['black'])
         self.all_sprite_list.add(self.thePlayer)
         
     def buildBlock(self,locations,color):
@@ -32,24 +29,29 @@ class blockBreaker(object):
         return screen
     
     def logic(self):
-        global black
+            
         balls=self.ball_group.sprites()
-    
-        ballsCollide=pygame.sprite.spritecollide(self.thePlayer, self.ball_group,False)
+        ballsCollide=pygame.sprite.spritecollide(self.thePlayer,
+                                                 self.ball_group,False)
         if ballsCollide:
             for b in ballsCollide:
             #for i in range(len(balls)):
                 diff = (self.thePlayer.rect.x + self.thePlayer.size[0]/2) - (b.rect.x+b.size[0]/2)
                 ballsCollide.pop()
-                b.rect.y = 600 - self.thePlayer.rect.height - b.rect.height
+                b.rect.y = 600-self.thePlayer.rect.height-b.rect.height
                 b.y=b.rect.y
                 b.bounce(diff)
+                b.lastBounce=0
         score=0
         for b in balls:
+            if b.lastBounce>1000:
+                b.bounce(180)
+                b.lastBounce=0
             deadBlocks=pygame.sprite.spritecollide(b,self.block_list,True)
             if len(deadBlocks)>0:
                 score += len(deadBlocks)*5
                 b.bounce(0)
+                b.lastBounce=0
         bL=self.block_list.sprites()       
 
         self.block_list.update()
@@ -71,7 +73,7 @@ class blockBreaker(object):
         self.all_sprite_list.empty()
         self.all_sprite_list.add(self.thePlayer)
         self.thePlayer.reset()
-        self.buildBlock(self.buildLevel1(),black)
+        self.buildBlock(self.buildLevel1(),color['black'])
         
     def eventHandler(self,event):
         if event.type == pygame.KEYDOWN or event.type==pygame.KEYUP:
@@ -94,11 +96,10 @@ class blockBreaker(object):
 
         
     def buildLevel1(self):
-        global black
         loc=[]
         x=20
         y=80
-        aBall=ball.Ball(black,(395,570))
+        aBall=ball.Ball(color['red'],(395,570))
         self.all_sprite_list.add(aBall)
         self.ball_group.add(aBall)
         for i in range(120):
