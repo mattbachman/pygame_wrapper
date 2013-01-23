@@ -19,6 +19,7 @@ class Ball(pygame.sprite.Sprite):
         self.x=float(location[0])
         self.y=float(location[1])
         self.speed=1.0
+        self.lastBounce=0
 
         #sprite variables
         self.image=pygame.Surface(self.size)
