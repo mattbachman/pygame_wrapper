@@ -14,12 +14,16 @@
 #abstraction of the pygame game loop and initialization.
 
 #Feel free to use, please give me some props and send and email to
-#mbachman1@gmail.com with GITHUB in the subject.   
+#mbachman1@gmail.com with pygame_wrapper in the subject.
+
+#Any comments/questions should be directed to the email above
+#If you want to work on this with me, send me an email too.
 
 
 import pygame
-#import blockBreaker
 
+
+##TODO MAKE COLOR DICTIONARY
 black = ( 0, 0, 0)
 white = ( 255, 255, 255)
 green = ( 0, 255, 0)
@@ -45,8 +49,10 @@ class gameEngine(object):
         #the game
         self.game=myObj
 
+        #score
+        self.score=0
+
         #pygame variables/initialization
-        
         self.screen=pygame.display.set_mode(size)
         pygame.display.set_caption(name)
         pygame.init()
@@ -54,15 +60,16 @@ class gameEngine(object):
         self.headFont = pygame.font.SysFont("ariel",90)
         self.clock=pygame.time.Clock()
 
+    #the main game loop
     def run(self):
         while not self.done:
             self.eventHandler(pygame.event.get())
             self.gameLogic()
             self.gameDraw()
-            self.clock.tick()
+            self.clock.tick(self.tickLen)
         pygame.quit()
                 
-
+    #handle pygame events
     def eventHandler(self,events):
         test=-2
         for event in events:
@@ -71,20 +78,21 @@ class gameEngine(object):
                 self.done=True
                 handled=True
             if not handled:
-                if not self.startScreen and not self.gameOver and not self.nextLevel:
-                    self.game.eventHandler(event)
-                elif self.gameOver:
+                if self.gameOver:
                     test=self.menuHandler(event)
                     if test==0:
                         self.gameOver=False
+                        self.score=0
                 elif self.nextLevel:
                     test=self.menuHandler(event)
                     if test==0:
                         self.nextLevel=False
-                else:
+                elif self.startScreen:
                     test=self.menuHandler(event)
                     if test==0:
                         self.startScreen=False
+                else:
+                    self.game.eventHandler(event)
             if test==-1:
                 self.done=True
                         
@@ -93,10 +101,11 @@ class gameEngine(object):
         #no logic if the game is playing
         if not self.startScreen and not self.gameOver:
             test=self.game.logic()
-            if test==1:
+            if test[0]==1:
                 self.nextLevel=True
-            elif test==-1:
+            elif test[0]==-1:
                 self.gameOver=True
+            self.score+=test[1]
             
     def menuHandler(self,event):
         if event.type == pygame.KEYDOWN:
@@ -111,11 +120,16 @@ class gameEngine(object):
         title=self.headFont.render(self.name,True,white)
         self.screen.fill(black)
         self.screen.blit(title,((self.size[0]//2)-title.get_width()//2,50))
-        if prompt != " ":
+        if prompt !=" ":
             prompt=self.font.render(prompt,True,white)
             self.screen.blit(prompt,
                              ((self.size[0]//2)-prompt.get_width()//2,
                               (self.size[1]//2)-prompt.get_height()//2))
+            prompt= "Score: "+str(self.score)
+            prompt=self.font.render(prompt, True, white)
+            self.screen.blit(prompt,
+                             ((self.size[0]//2)-prompt.get_width()//2,
+                              (((self.size[1]//2)+30)-prompt.get_height()//2)))
         height=self.size[1]-(self.size[1]//3)
         for op in options:
             temp=self.font.render(op,True,white)

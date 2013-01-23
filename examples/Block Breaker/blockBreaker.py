@@ -36,8 +36,7 @@ class blockBreaker(object):
         balls=self.ball_group.sprites()
     
         ballsCollide=pygame.sprite.spritecollide(self.thePlayer, self.ball_group,False)
-        print (ballsCollide)
-        if len(ballsCollide)>0:
+        if ballsCollide:
             for b in ballsCollide:
             #for i in range(len(balls)):
                 diff = (self.thePlayer.rect.x + self.thePlayer.size[0]/2) - (b.rect.x+b.size[0]/2)
@@ -45,9 +44,11 @@ class blockBreaker(object):
                 b.rect.y = 600 - self.thePlayer.rect.height - b.rect.height
                 b.y=b.rect.y
                 b.bounce(diff)
+        score=0
         for b in balls:
             deadBlocks=pygame.sprite.spritecollide(b,self.block_list,True)
             if len(deadBlocks)>0:
+                score += len(deadBlocks)*5
                 b.bounce(0)
         bL=self.block_list.sprites()       
 
@@ -59,10 +60,10 @@ class blockBreaker(object):
                 self.ball_group.remove(b)
         balls=self.ball_group.sprites()
         if len(bL)==0:
-            return 1
+            return (1,score)
         if len(balls)==0:
-            return -1
-        return 0
+            return (-1,score)
+        return (0,score)
             
     def nextLevel(self):
         self.ball_group.empty()
