@@ -25,10 +25,12 @@ import pickle
 
 
 ##TODO MAKE COLOR DICTIONARY
-black = ( 0, 0, 0)
-white = ( 255, 255, 255)
-green = ( 0, 255, 0)
-red = ( 255, 0, 0)
+#black = ( 0, 0, 0)
+#white = ( 255, 255, 255)
+#green = ( 0, 255, 0)
+#red = ( 255, 0, 0)
+color={"black":(0,0,0),"white":(255,255,255),"red":(255,0,0),"green":(0,255,0),
+       "blue":(0,0,255)}
 
 
 
@@ -124,22 +126,22 @@ class gameEngine(object):
         return 1
 
     def drawMenu(self,options, prompt=" "):
-        title=self.headFont.render(self.name,True,white)
-        self.screen.fill(black)
+        title=self.headFont.render(self.name,True,color['white'])
+        self.screen.fill(color['black'])
         self.screen.blit(title,((self.size[0]//2)-title.get_width()//2,50))
         if prompt !=" ":
-            prompt=self.font.render(prompt,True,white)
+            prompt=self.font.render(prompt,True,color['white'])
             self.screen.blit(prompt,
                              ((self.size[0]//2)-prompt.get_width()//2,
                               (self.size[1]//2)-prompt.get_height()//2))
             prompt= "Score: "+str(self.score)
-            prompt=self.font.render(prompt, True, white)
+            prompt=self.font.render(prompt, True, color['white'])
             self.screen.blit(prompt,
                              ((self.size[0]//2)-prompt.get_width()//2,
                               (((self.size[1]//2)+30)-prompt.get_height()//2)))
         height=self.size[1]-(self.size[1]//3)
         for op in options:
-            temp=self.font.render(op,True,white)
+            temp=self.font.render(op,True,color['white'])
             self.screen.blit(temp,
                              ((self.size[0]//2)-temp.get_width()//2,
                               height))
@@ -147,7 +149,7 @@ class gameEngine(object):
                              
     
     def gameDraw(self):
-        self.screen.fill(white)
+        self.screen.fill(color['white'])
         if self.startScreen:
             self.drawMenu(("Press n for New Game","Press ESC to Quit"))
         elif self.gameOver:
