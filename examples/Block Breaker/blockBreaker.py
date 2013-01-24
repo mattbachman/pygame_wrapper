@@ -45,7 +45,7 @@ class blockBreaker(object):
         score=0
         for b in balls:
             if b.lastBounce>1000:
-                b.bounce(180)
+                b.bounce(90)
                 b.lastBounce=0
             deadBlocks=pygame.sprite.spritecollide(b,self.block_list,True)
             if len(deadBlocks)>0:
