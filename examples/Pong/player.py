@@ -35,20 +35,20 @@ class Player(pygame.sprite.Sprite):
     def update(self,ball=None,scnSize=(800,600)):
         #print(str(self.moveLeft)+" "+str(self.moveRight))
         if self.moveLeft:
-            self.rect.x=self.rect.x-1
+            self.rect.x=self.rect.x-2
             if self.rect.x<0:
                 self.rect.x=0
         if self.moveRight:
-            self.rect.x=self.rect.x+1
+            self.rect.x=self.rect.x+2
             test=scnSize[0]-self.size[0]
             if self.rect.x>720:
                 self.rect.x=720
         if self.moveUp:
-            self.rect.y=self.rect.y-1
+            self.rect.y=self.rect.y-2
             if self.rect.y<0:
                 self.rect.y=0
         if self.moveDown:
-            self.rect.y=self.rect.y+1
+            self.rect.y=self.rect.y+2
             test=scnSize[1]-self.size[1]
             if self.rect.y>test:
                 self.rect.y=test

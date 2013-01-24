@@ -19,7 +19,8 @@ class Ball(pygame.sprite.Sprite):
         self.x=float(location[0])
         self.y=float(location[1])
         self.speed=1.0
-        self.lastBounce=0
+        self.lastBounce=[0,0]
+        self.bounceCheck=0
         self.originalLoc=location
         #sprite variables
         self.image=pygame.Surface(self.size)
@@ -42,17 +43,15 @@ class Ball(pygame.sprite.Sprite):
     #move the ball with the paddle
     def preMove(self):
         if self.preMoveLeft:
-            self.rect.y-=1
-            self.y-=1
+            self.rect.y-=2
             if self.rect.y<35:
                 self.rect.y=35
-                self.y=35
+            self.y=self.rect.y
         if self.preMoveRight:
-            self.rect.y+=1
-            self.y+=1
+            self.rect.y+=2
             if self.rect.y>555:
                 self.rect.y=555
-                self.y=555
+            self.y=self.rect.y
 
     #horizontal bounce
     def bounce(self,diff):
@@ -68,6 +67,7 @@ class Ball(pygame.sprite.Sprite):
         self.rect.y=self.y
         self.isMoving=False
         self.direction=75
+        self.speed=1.0
 
     #update for sprite class
     def update(self):

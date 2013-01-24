@@ -72,17 +72,28 @@ class Pong(object):
         if self.aball.isMoving:
             test=pygame.sprite.spritecollide(self.aball,self.thePlayers,False)
             if test:
+                self.aball.bounceCheck=0
                 diff = (test[0].rect.y+test[0].size[1]/2)-(self.aball.rect.y+self.aball.size[1]/2)
                 if test[0].rect.x==0:
                     self.aball.rect.x=self.thePlayers[0].rect.width+1
+                    self.aball.lastBounce=[1,0]
                 else:
                     self.aball.rect.x=self.size[0]-self.thePlayers[0].rect.width-self.aball.rect.width
+                    self.aball.lastBounce=[0,1]
                 self.aball.x=self.aball.rect.x
                 self.aball.bounceVert(diff)
+            else:
+                self.aball.bounceCheck+=1
+            if self.aball.bounceCheck>5000:
+                self.aball.bounceCheck=0
+                if self.aball.lastBounce[0]==1:
+                    self.aball.direction=70
+                else:
+                    self.aball.direction=290
               
             self.thePlayers[0].update()
             self.thePlayers[1].update(self.aball)
-
+            self.aball.speed+=.0001
             if self.aball.x<=0:
                 self.playerScore[1]=self.playerScore[1]+1
                 self.reset()
