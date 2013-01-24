@@ -48,6 +48,7 @@ class gameEngine(object):
         self.startScreen=True
         self.nextLevel=False
         self.gameOver=False
+        self.win=False
 
         #the game
         self.game=myObj
@@ -94,21 +95,30 @@ class gameEngine(object):
                     test=self.menuHandler(event)
                     if test==0:
                         self.startScreen=False
+                elif self.win:
+                    test=self.menuHandler(event)
+                    if test==0:
+                        self.win=False
+                        self.score=0
                 else:
                     self.game.eventHandler(event)
             if test==-1:
                 self.done=True
                         
 
+    #game.logic must return 1 for next level -1 for gameOver and 2 for win
     def gameLogic(self):
         #no logic if the game is playing
-        if not self.startScreen and not self.gameOver:
+        if not self.startScreen and not self.gameOver and not self.win:
             test=self.game.logic()
             if test[0]==1:
                 self.nextLevel=True
             elif test[0]==-1:
                 self.gameOver=True
-            self.score+=test[1]
+            elif test[0]==2:
+                self.win=True
+            if test[1]:
+                self.score+=test[1]
             
     def menuHandler(self,event):
         if event.type == pygame.KEYDOWN:
@@ -134,11 +144,12 @@ class gameEngine(object):
             self.screen.blit(prompt,
                              ((self.size[0]//2)-prompt.get_width()//2,
                               (self.size[1]//2)-prompt.get_height()//2))
-            prompt= "Score: "+str(self.score)
-            prompt=self.font.render(prompt, True, color['white'])
-            self.screen.blit(prompt,
-                             ((self.size[0]//2)-prompt.get_width()//2,
-                              (((self.size[1]//2)+30)-prompt.get_height()//2)))
+            if self.score!=0:
+                prompt= "Score: "+str(self.score)
+                prompt=self.font.render(prompt, True, color['white'])
+                self.screen.blit(prompt,
+                                 ((self.size[0]//2)-prompt.get_width()//2,
+                                  (((self.size[1]//2)+30)-prompt.get_height()//2)))
         height=self.size[1]-(self.size[1]//3)
         for op in options:
             temp=self.font.render(op,True,color['white'])
@@ -150,12 +161,15 @@ class gameEngine(object):
     
     def gameDraw(self):
         self.screen.fill(color['white'])
-        if self.startScreen:
+        if self.startScreen :
             self.drawMenu(("Press n for New Game","Press ESC to Quit"))
         elif self.gameOver:
             self.drawMenu(("Press n for New Game","Press ESC to Quit"),
                           "You Lose")
         elif self.nextLevel:
+            self.drawMenu(("Press n for next level","Press ESC to Quit"),
+                          "Way To Go")
+        elif self.win:
             self.drawMenu(("Press n for next level","Press ESC to Quit"),
                           "Way To Go")
         else:
