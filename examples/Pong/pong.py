@@ -16,6 +16,7 @@ class Pong(object):
         self.buildPlayers()
         self.aball=ball.Ball(color['black'],(20, self.size[1]/2 - 5))
         self.all_sprite_list.add(self.aball)
+        self.font=None
 
     def buildPlayers(self):
         if self.thePlayers:
@@ -53,10 +54,21 @@ class Pong(object):
                         self.aball.preStartMoveEvent(event.key)
     
     def draw(self,screen):
+        pygame.draw.line(screen,color['black'],(self.size[0]/2,0),
+                         (self.size[0]/2,self.size[1]),3)
         self.all_sprite_list.draw(screen)
+        score1=self.font.render(str(self.playerScore[0]),True,color['black'])
+        score2=self.font.render(str(self.playerScore[1]),True,color['black'])
+        screen.blit(score1,
+                    (((self.size[0]//2)-(score1.get_width()//2))-60,
+                    ((self.size[1]//2)-score1.get_height()//2)//4))
+        screen.blit(score2,
+                    (((self.size[0]//2)-(score2.get_width()//2))+60,
+                    ((self.size[1]//2)-score2.get_height()//2)//4))
         return screen
     def logic(self):
-        
+        if not self.font:
+            self.font=pygame.font.SysFont("Consolas",150)
         if self.aball.isMoving:
             test=pygame.sprite.spritecollide(self.aball,self.thePlayers,False)
             if test:
