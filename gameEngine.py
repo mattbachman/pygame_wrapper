@@ -24,11 +24,7 @@ import pygame
 import pickle
 
 
-##TODO MAKE COLOR DICTIONARY
-#black = ( 0, 0, 0)
-#white = ( 255, 255, 255)
-#green = ( 0, 255, 0)
-#red = ( 255, 0, 0)
+#color dictionary
 color={"black":(0,0,0),"white":(255,255,255),"red":(255,0,0),"green":(0,255,0),
        "blue":(0,0,255)}
 
@@ -167,11 +163,11 @@ class gameEngine(object):
             self.drawMenu(("Press n for New Game","Press ESC to Quit"),
                           "You Lose")
         elif self.nextLevel:
-            self.drawMenu(("Press n for next level","Press ESC to Quit"),
+            self.drawMenu(("Press n for Next Level","Press ESC to Quit"),
                           "Way To Go")
         elif self.win:
-            self.drawMenu(("Press n for next level","Press ESC to Quit"),
-                          "Way To Go")
+            self.drawMenu(("Press n for New Game","Press ESC to Quit"),
+                          "You Win")
         else:
             self.screen=self.game.draw(self.screen)
         pygame.display.flip()
