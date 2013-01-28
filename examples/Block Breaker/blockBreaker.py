@@ -14,8 +14,9 @@ class blockBreaker(object):
     
     def __init__(self):
         global black
-        self.level=1
+        self.level=0
         self.complete=False
+        self.lost=False
         
         self.block_list = pygame.sprite.RenderPlain()
         self.all_sprite_list = pygame.sprite.RenderPlain()
@@ -73,6 +74,10 @@ class blockBreaker(object):
         return (0,score)
             
     def nextLevel(self):
+        if self.lost:
+            self.level=1
+        else:
+            self.level+=1
         self.ball_group.empty()
         self.block_list.empty()
         self.all_sprite_list.empty()
@@ -116,16 +121,7 @@ class blockBreaker(object):
             
             loc.append((x,y))
         return loc
-    def buildLevel2(self):
-        def testVars(x,y,xTest,yTest):
-            if x==xText and y==yTest:
-                return True
-            else:
-                return False
-        loc=[]
-        for i in range (321,518):#x range
-            for b in range(9,80):#y range
-                if testVars(:
+    
 
     
         
