@@ -15,10 +15,11 @@ class Ball(pygame.sprite.Sprite):
         self.isMoving=False
         self.preMoveLeft=False
         self.preMoveRight=False
-        self.direction=200
+        #self.direction=200
+        self.direction=180
         self.x=float(location[0])
         self.y=float(location[1])
-        self.speed=1.0
+        self.speed=1.2
         self.lastBounce=0
 
         #sprite variables
@@ -63,6 +64,10 @@ class Ball(pygame.sprite.Sprite):
         if not self.isMoving:
             self.preMove()
         else:
+            if self.direction>=90  and self. direction<=95:
+                self.direction== 100
+            elif self.direction <=270 and self.direction>=265:
+                self.direction=260
             direction_rads=math.radians(self.direction)
             self.x+= self.speed * math.sin(direction_rads)
             self.y+= self.speed * math.cos(direction_rads)

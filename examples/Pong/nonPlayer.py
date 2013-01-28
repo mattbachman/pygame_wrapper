@@ -3,7 +3,7 @@ import pygame, player, random
 random.seed()
 
 class nonPlayerCharacter(player.Player):
-    doMove=95
+    doMove=90
     def update(self,ball=None,scnSize=(800,600)):
         if ball:
             if self.direct=='vertical':

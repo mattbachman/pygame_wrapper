@@ -5,8 +5,13 @@ import ball
 import sys
 sys.path.append('../..')
 from gameEngine import color
+#Second level==JEFF
+
+levels={"level2":[(307,80),(322,10),(322,35),(322,50),(322,65),(322,80),(342,10),(342,35),(342,50),
+                      (342,65),(342,80),(357,10),(357,50),(357,80),(372,10)]}
 
 class blockBreaker(object):
+    
     def __init__(self):
         global black
         self.level=1
@@ -111,5 +116,17 @@ class blockBreaker(object):
             
             loc.append((x,y))
         return loc
+    def buildLevel2(self):
+        def testVars(x,y,xTest,yTest):
+            if x==xText and y==yTest:
+                return True
+            else:
+                return False
+        loc=[]
+        for i in range (321,518):#x range
+            for b in range(9,80):#y range
+                if testVars(:
+
+    
         
         

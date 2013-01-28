@@ -21,7 +21,7 @@ class Ball(pygame.sprite.Sprite):
         self.speed=1.0
         self.lastBounce=[0,0]
         self.bounceCheck=0
-        self.originalLoc=location
+        self.originalLoc=copy.deepcopy(location)
         #sprite variables
         self.image=pygame.Surface(self.size)
         self.image.fill(color)
@@ -68,6 +68,9 @@ class Ball(pygame.sprite.Sprite):
         self.isMoving=False
         self.direction=75
         self.speed=1.0
+        self.lastBounce=[0,0]
+        self.bounceCheck=0
+        
 
     #update for sprite class
     def update(self):

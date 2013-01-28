@@ -21,6 +21,8 @@ class Player(pygame.sprite.Sprite):
     def reset(self):
         self.rect.x=360
         self.rect.y=580
+        self.moveLeft=False
+        self.moveRight=False
     def update(self):
         #print(str(self.moveLeft)+" "+str(self.moveRight))
         if self.moveLeft:
